@@ -61,6 +61,17 @@ namespace DongolOfLegends.API.ApiHelpers
             }
             return default;
         }
+        public T GetRequestForItem<T>(params string[] complexUrl)
+        {
+            HttpRequestMessage request = GetRequest(string.Join("", complexUrl));
+            HttpResponseMessage response = GetClient().Send(request);
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<T>(response.Content.ReadAsStringAsync().Result);
+            }
+            return default;
+        }
+
         public List<T> GetRequestForList<T>(string requestUrl)
         {
             HttpRequestMessage request = GetRequest(requestUrl);
@@ -72,7 +83,16 @@ namespace DongolOfLegends.API.ApiHelpers
             }
             return default;
         }
+        public List<T> GetRequestForList<T>(params string[] complexUrl)
+        {
+            HttpRequestMessage request = GetRequest(string.Join("", complexUrl));
+            HttpResponseMessage response = GetClient().Send(request);
 
-
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<List<T>>(response.Content.ReadAsStringAsync().Result);
+            }
+            return default;
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace DongolOfLegends.API.Models.Models.MatchHistory
         public GoldPerMinuteDeltas GoldPerMinDeltas { get; set; }
 
         [JsonProperty("damageTakenPerMinDeltas")]
-        public DamageTakenPerMinDeltas DamageTakenPerMinDeltas { get; set; }
+        public DamageTakenDeltas DamageTakenPerMinDeltas { get; set; }
 
         [JsonProperty("role")]
         public string Role { get; set; }

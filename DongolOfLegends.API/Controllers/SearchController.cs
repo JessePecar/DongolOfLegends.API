@@ -1,4 +1,6 @@
 ﻿using DongolOfLegends.API.ApiHelpers.Contracts;
+using DongolOfLegends.API.Models.Models;
+using DongolOfLegends.API.Models.Models.MatchHistory;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -56,11 +58,10 @@ namespace DongolOfLegends.API.Controllers
         [Route("MatchHistory/{summonerName}")]
         public IActionResult MatchHistory(string summonerName)
         {
+            Summoner summoner = LeagueData.GetSummonerInfo(summonerName);
+            SummonerMatches matches = LeagueData.GetMatchDetails(summoner.AccountId);
 
-
-
-
-            return Ok();
+            return Ok(matches);
         }
     }
 }

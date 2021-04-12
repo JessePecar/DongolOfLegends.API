@@ -2,6 +2,7 @@
 using DongolOfLegends.API.ApiHelpers.Contracts;
 using DongolOfLegends.API.Models.Models;
 using DongolOfLegends.API.Models.Models.Champions;
+using DongolOfLegends.API.Models.Models.MatchHistory;
 using DongolOfLegends.API.Models.Utility;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -122,10 +123,27 @@ namespace DongolOfLegends.API.ApiHelpers
             Summoner summoner = new Summoner();
             if (!_cache.TryGetValue(summonerName, out summoner))
             {
-
+                summoner = _client.GetRequestForItem<Summoner>(RoutingValues.NA1, RiotRequests.SummonerInformation.Replace("{summonerName}", summonerName));
+                _cache.Set(summonerName, summoner);
             }
             
             return summoner;
+        }
+
+        public SummonerMatches GetMatchDetails(string userId)
+        {
+            if(_cache.TryGetValue(userId, out DateTime expiration) && expiration < DateTime.Now.AddMinutes(-1))
+            {
+                return _cache.Get($"{userId}_matchHistory") as SummonerMatches;
+            }
+
+            SummonerMatches matchHistory;
+            if(!_cache.TryGetValue($"{userId}_matchHistory", out matchHistory) || matchHistory == null)
+            {
+                matchHistory = _client.GetRequestForItem<SummonerMatches>(RoutingValues.NA1, RiotRequests.MatchHistory.Replace("{accountId}", userId));
+                _cache.Set($"{userId}_matchHistory", matchHistory);
+            }
+            return matchHistory;
         }
     }
 }

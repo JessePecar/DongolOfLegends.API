@@ -1,5 +1,6 @@
 ﻿using DongolOfLegends.API.Models.Models;
 using DongolOfLegends.API.Models.Models.Champions;
+using DongolOfLegends.API.Models.Models.MatchHistory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,6 @@ namespace DongolOfLegends.API.ApiHelpers.Contracts
         Champion GetChampion(string championName);
         Champion GetChampionById(int id);
         Summoner GetSummonerInfo(string summonerName);
+        SummonerMatches GetMatchDetails(string userId);
     }
 }

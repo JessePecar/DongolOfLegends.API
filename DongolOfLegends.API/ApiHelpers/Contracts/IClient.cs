@@ -8,6 +8,8 @@ namespace DongolOfLegends.API.ApiHelpers.Contracts
     public interface IClient
     {
         T GetRequestForItem<T>(string requestUrl);
+        T GetRequestForItem<T>(params string[] complexUrl);
         List<T> GetRequestForList<T>(string requestUrl);
+        List<T> GetRequestForList<T>(params string[] complexUrl);
     }
 }

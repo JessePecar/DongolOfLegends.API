@@ -6,20 +6,20 @@ namespace DongolOfLegends.API.Models.Utility
 {
     public static class RoutingValues
     {
-        public static string BR1 => "br1.api.riotgames.com";
-        public static string EUN1 => "eun.api.riotgames.com";
-        public static string EUW1 => "euwapi.riotgames.com";
-        public static string JP1 => "jp1.api.riotgames.com";
-        public static string KR => "kr.api.riotgames.com";
-        public static string LA1 => "la1.api.riotgames.com";
-        public static string LA2 => "la2.api.riotgames.com";
-        public static string NA1 => "na1.api.riotgames.com";
-        public static string OC1 => "oc1.api.riotgames.com";
-        public static string TR1 => "tr1.api.riotgames.com";
-        public static string RU => "ru.api.riotgames.com";
-        public static string AMERICAS => "americas.api.riotgames.com";
-        public static string ASIA => "asia.api.riotgames.com";
-        public static string EUROPE => "europe.api.riotgames.com";
+        public static string BR1 => "https://br1.api.riotgames.com";
+        public static string EUN1 => "https://eun.api.riotgames.com";
+        public static string EUW1 => "https://euwapi.riotgames.com";
+        public static string JP1 => "https://jp1.api.riotgames.com";
+        public static string KR => "https://kr.api.riotgames.com";
+        public static string LA1 => "https://la1.api.riotgames.com";
+        public static string LA2 => "https://la2.api.riotgames.com";
+        public static string NA1 => "https://na1.api.riotgames.com";
+        public static string OC1 => "https://oc1.api.riotgames.com";
+        public static string TR1 => "https://tr1.api.riotgames.com";
+        public static string RU => "https://ru.api.riotgames.com";
+        public static string AMERICAS => "https://americas.api.riotgames.com";
+        public static string ASIA => "https://asia.api.riotgames.com";
+        public static string EUROPE => "https://europe.api.riotgames.com";
 
     }
 }
