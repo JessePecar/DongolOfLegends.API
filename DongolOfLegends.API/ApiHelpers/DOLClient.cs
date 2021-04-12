@@ -67,7 +67,8 @@ namespace DongolOfLegends.API.ApiHelpers
             HttpResponseMessage response = GetClient().Send(request);
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<T>(response.Content.ReadAsStringAsync().Result);
+                string resultContent = response.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<T>(resultContent);
             }
             return default;
         }

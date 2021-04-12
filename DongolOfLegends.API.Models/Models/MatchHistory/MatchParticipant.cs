@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DongolOfLegends.API.Models.Models.Champions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,7 @@ namespace DongolOfLegends.API.Models.Models.MatchHistory
 
         [JsonProperty("championId")]
         public int ChampionId { get; set; }
+        public Champion Champion { get; set; }
 
         [JsonProperty("spell1Id")]
         public int Spell1Id { get; set; }

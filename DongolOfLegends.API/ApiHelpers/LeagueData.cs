@@ -124,7 +124,10 @@ namespace DongolOfLegends.API.ApiHelpers
             if (!_cache.TryGetValue(summonerName, out summoner))
             {
                 summoner = _client.GetRequestForItem<Summoner>(RoutingValues.NA1, RiotRequests.SummonerInformation.Replace("{summonerName}", summonerName));
-                _cache.Set(summonerName, summoner);
+                if(summoner != null)
+                {
+                    _cache.Set(summonerName, summoner);
+                }
             }
             
             return summoner;
@@ -140,10 +143,22 @@ namespace DongolOfLegends.API.ApiHelpers
             SummonerMatches matchHistory;
             if(!_cache.TryGetValue($"{userId}_matchHistory", out matchHistory) || matchHistory == null)
             {
-                matchHistory = _client.GetRequestForItem<SummonerMatches>(RoutingValues.NA1, RiotRequests.MatchHistory.Replace("{accountId}", userId));
-                _cache.Set($"{userId}_matchHistory", matchHistory);
+                matchHistory = _client.GetRequestForItem<SummonerMatches>(RoutingValues.NA1, RiotRequests.MatchHistory.Replace("{accountId}", userId).Replace("{skipNum}", "0").Replace("{takeNum}", "10"));
+                if(matchHistory != null)
+                {
+                    _cache.Set($"{userId}_matchHistory", matchHistory);
+                }
             }
             return matchHistory;
+        }
+
+        public MatchDetails GetGameDetailsById(long id)
+        {
+            MatchDetails matchDetails = new MatchDetails();
+
+            matchDetails = _client.GetRequestForItem<MatchDetails>(RoutingValues.NA1, RiotRequests.MatchDetails.Replace("{matchId}", id.ToString()));
+
+            return matchDetails;
         }
     }
 }

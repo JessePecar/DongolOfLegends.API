@@ -19,5 +19,6 @@ namespace DongolOfLegends.API.ApiHelpers.Contracts
         Champion GetChampionById(int id);
         Summoner GetSummonerInfo(string summonerName);
         SummonerMatches GetMatchDetails(string userId);
+        MatchDetails GetGameDetailsById(long id);
     }
 }

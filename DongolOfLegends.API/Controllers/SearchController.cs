@@ -14,7 +14,7 @@ namespace DongolOfLegends.API.Controllers
     [ApiController]
     public class SearchController : BaseController
     {
-        public SearchController(ILeagueData leagueData) :base(leagueData)
+        public SearchController(ILeagueData leagueData) : base(leagueData)
         {
 
         }
@@ -54,14 +54,48 @@ namespace DongolOfLegends.API.Controllers
             return Ok(LeagueData.GetVersions());
         }
 
+        /// <summary>
+        /// Gives the game (1 being most recent) based on the user and the number given
+        /// </summary>
+        /// <param name="summonerName"></param>
+        /// <param name="gameNumber"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("MatchHistory/{summonerName}")]
         public IActionResult MatchHistory(string summonerName)
         {
-            Summoner summoner = LeagueData.GetSummonerInfo(summonerName);
-            SummonerMatches matches = LeagueData.GetMatchDetails(summoner.AccountId);
+            try
+            {
+                Summoner summoner = LeagueData.GetSummonerInfo(summonerName);
+                SummonerMatches matches = LeagueData.GetMatchDetails(summoner.AccountId);
+                SummonerMatchesDetailed detailedMatches = new SummonerMatchesDetailed()
+                {
+                    DetailedMatches = matches.Matches.Select(m => new MatchHistoryDetailed
+                    {
+                        Lane = m.Lane,
+                        PlatformId = m.PlatformId,
+                        Queue = m.Queue,
+                        Role = m.Role,
+                        Season = m.Season,
+                        Timestamp = m.Timestamp,
+                        Game = LeagueData.GetGameDetailsById(m.GameId),
+                        Champion = LeagueData.GetChampionById(m.Champion)
 
-            return Ok(matches);
+                    }).ToList()
+                };
+
+                detailedMatches.DetailedMatches = detailedMatches.DetailedMatches.Select(dm =>
+                {
+                    dm.Game.Participants = dm.Game.Participants.Select(p => { p.Champion = LeagueData.GetChampionById(p.ChampionId); return p; }).ToList();
+                    return dm;
+                }).ToList();
+
+                return Ok(detailedMatches);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
