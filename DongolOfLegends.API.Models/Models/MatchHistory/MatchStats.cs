@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DongolOfLegends.API.Models.Models.Items;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,8 @@ namespace DongolOfLegends.API.Models.Models.MatchHistory
 
         [JsonProperty("win")]
         public bool Win { get; set; }
+
+        public List<ItemData> Items { get; set; }
 
         [JsonProperty("item0")]
         public int Item0 { get; set; }

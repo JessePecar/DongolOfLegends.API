@@ -181,6 +181,11 @@ namespace DongolOfLegends.API.Models.Models.Champions
     {
     }
 
+    public class Gwen
+: Champion
+    {
+    }
+
     public class Hecarim
 : Champion
     {

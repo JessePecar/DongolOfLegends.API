@@ -1,5 +1,6 @@
 ﻿using DongolOfLegends.API.Models.Models;
 using DongolOfLegends.API.Models.Models.Champions;
+using DongolOfLegends.API.Models.Models.Items;
 using DongolOfLegends.API.Models.Models.MatchHistory;
 using System;
 using System.Collections.Generic;
@@ -20,5 +21,6 @@ namespace DongolOfLegends.API.ApiHelpers.Contracts
         Summoner GetSummonerInfo(string summonerName);
         SummonerMatches GetMatchDetails(string userId);
         MatchDetails GetGameDetailsById(long id);
+        Items GetItemData();
     }
 }

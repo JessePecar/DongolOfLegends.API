@@ -23,35 +23,64 @@ namespace DongolOfLegends.API.Controllers
         [Route("PlayerSearch/{userName}")]
         public IActionResult PlayerSearch(string userName)
         {
-            return Ok(userName);
+            try { return Ok(userName); }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("ChampionSearch/{championName}")]
         public IActionResult ChampionSearch(string championName)
         {
-            return Ok(LeagueData.GetChampion(championName));
+            try { return Ok(LeagueData.GetChampion(championName)); }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("AllChampions")]
         public IActionResult AllChampions()
         {
-            return Ok(LeagueData.GetChampions());
+            try
+            {
+                return Ok(LeagueData.GetChampions());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("ChampionById/{id}")]
         public IActionResult ChampionById(int id)
         {
-            return Ok(LeagueData.GetChampionById(id));
+            try
+            {
+                return Ok(LeagueData.GetChampionById(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("Versions")]
         public IActionResult Versions()
         {
-            return Ok(LeagueData.GetVersions());
+            try
+            {
+                return Ok(LeagueData.GetVersions());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         /// <summary>
@@ -79,14 +108,27 @@ namespace DongolOfLegends.API.Controllers
                         Season = m.Season,
                         Timestamp = m.Timestamp,
                         Game = LeagueData.GetGameDetailsById(m.GameId),
-                        Champion = LeagueData.GetChampionById(m.Champion)
-
+                        Champion = LeagueData.GetChampionById(m.Champion),
+                        AccountId = summoner.AccountId
                     }).ToList()
                 };
 
                 detailedMatches.DetailedMatches = detailedMatches.DetailedMatches.Select(dm =>
                 {
                     dm.Game.Participants = dm.Game.Participants.Select(p => { p.Champion = LeagueData.GetChampionById(p.ChampionId); return p; }).ToList();
+                    dm.Game.Participants.ForEach(p =>
+                    {
+                        p.Stats.Items = new List<Models.Models.Items.ItemData>()
+                        {
+                            LeagueData.GetItemData().Data.FirstOrDefault(d => d.Id == p.Stats.Item0),
+                            LeagueData.GetItemData().Data.FirstOrDefault(d => d.Id == p.Stats.Item1),
+                            LeagueData.GetItemData().Data.FirstOrDefault(d => d.Id == p.Stats.Item2),
+                            LeagueData.GetItemData().Data.FirstOrDefault(d => d.Id == p.Stats.Item3),
+                            LeagueData.GetItemData().Data.FirstOrDefault(d => d.Id == p.Stats.Item4),
+                            LeagueData.GetItemData().Data.FirstOrDefault(d => d.Id == p.Stats.Item5),
+                            LeagueData.GetItemData().Data.FirstOrDefault(d => d.Id == p.Stats.Item6)
+                        };
+                    });
                     return dm;
                 }).ToList();
 
@@ -96,6 +138,14 @@ namespace DongolOfLegends.API.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
+        }
+
+
+        [HttpGet]
+        [Route("Items")]
+        public IActionResult Items()
+        {
+            return Ok(LeagueData.GetItemData());
         }
     }
 }
