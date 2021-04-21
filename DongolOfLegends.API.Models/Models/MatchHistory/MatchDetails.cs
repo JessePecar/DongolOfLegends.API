@@ -1,12 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DongolOfLegends.API.Models.Models.MatchHistory
 {
     public class MatchDetails
     {
+        [Key]
         [JsonProperty("gameId")]
         public long GameId { get; set; }
 

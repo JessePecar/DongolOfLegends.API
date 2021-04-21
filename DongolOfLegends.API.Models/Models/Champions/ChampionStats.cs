@@ -1,12 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DongolOfLegends.API.Models.Models.Champions
 {
     public class ChampionStats
     {
+        [Key]
+        public long Id { get; set; }
         [JsonProperty("hp")]
         public double Hp { get; set; }
 

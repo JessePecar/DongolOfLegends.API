@@ -1,12 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DongolOfLegends.API.Models.Models
 {
     public class Summoner
     {
+        [Key]
         [JsonProperty("id")]
         public string Id { get; set; }
 

@@ -1,7 +1,7 @@
 ﻿using DongolOfLegends.API.Models.Models.Champions;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -9,6 +9,8 @@ namespace DongolOfLegends.API.Models.Models.MatchHistory
 {
     public class MatchHistoryDetailed
     {
+        [Key]
+        public long Id { get; set; }
         public string PlatformId { get; set; }
 
         public MatchDetails Game { get; set; }
@@ -31,10 +33,5 @@ namespace DongolOfLegends.API.Models.Models.MatchHistory
         public string Role { get; set; }
 
         public string Lane { get; set; }
-    }
-    public class SummonerMatchesDetailed
-    {
-        public List<MatchHistoryDetailed> DetailedMatches { get; set; }
-        public string PlayerName { get; set; }
     }
 }

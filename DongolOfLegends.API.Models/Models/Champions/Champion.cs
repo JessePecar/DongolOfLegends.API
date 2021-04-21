@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DongolOfLegends.API.Models.Models.Champions
@@ -10,11 +12,12 @@ namespace DongolOfLegends.API.Models.Models.Champions
         [JsonProperty("version")]
         public string Version { get; set; }
 
+        [Key]
         [JsonProperty("id")]
         public string Id { get; set; }
 
         [JsonProperty("key")]
-        public string Key { get; set; }
+        public long Key { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -31,8 +34,9 @@ namespace DongolOfLegends.API.Models.Models.Champions
         [JsonProperty("image")]
         public ChampionImage Image { get; set; }
 
+        [NotMapped]
         [JsonProperty("tags")]
-        public List<string> Tags { get; set; }
+        public List<string> tags { get; set; }
 
         [JsonProperty("partype")]
         public string Partype { get; set; }

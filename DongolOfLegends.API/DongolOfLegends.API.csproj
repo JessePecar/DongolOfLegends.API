@@ -6,11 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DongolOfLegends.API.Models\DongolOfLegends.API.Models.csproj" />
+    <ProjectReference Include="..\DongolOfLegends.API.BusinessLayer\DongolOfLegends.API.BusinessLayer.csproj" />
   </ItemGroup>
 
 </Project>

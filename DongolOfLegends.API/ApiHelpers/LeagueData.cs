@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DongolOfLegends.API.ApiHelpers.Contracts;
+using DongolOfLegends.API.DAC.Interfaces;
 using DongolOfLegends.API.Models.Models;
 using DongolOfLegends.API.Models.Models.Champions;
 using DongolOfLegends.API.Models.Models.Items;
@@ -20,11 +21,13 @@ namespace DongolOfLegends.API.ApiHelpers
         private readonly IMemoryCache _cache;
         private readonly IClient _client;
         private readonly IMapper _mapper;
-        public LeagueData(IMemoryCache cache, IClient client, IMapper mapper)
+        private readonly IChampionRepository _championRepo;
+        public LeagueData(IMemoryCache cache, IClient client, IMapper mapper, IChampionRepository championRepo)
         {
             _cache = cache;
             _client = client;
             _mapper = mapper;
+            _championRepo = championRepo;
         }
 
         public string GetLatestVersion => GetVersions().FirstOrDefault();
@@ -36,23 +39,19 @@ namespace DongolOfLegends.API.ApiHelpers
         public Champion GetChampionById(int id)
         {
             
-            return GetChampions().FirstOrDefault(c => int.Parse(c.Key) == id);
+            return GetChampions()?.FirstOrDefault(c => c.Key == id);
         }
 
         public IEnumerable<Champion> GetChampions()
         {
             //Check the cache, then check the version
-            IEnumerable<Champion> champions = new List<Champion>();
-            if (!_cache.TryGetValue("championVersion", out string champVersion) || champVersion != GetLatestVersion || !_cache.TryGetValue("champions", out champions) || champions == null)
+            IEnumerable<Champion> champions = _mapper.Map<IEnumerable<Champion>>(_championRepo.GetChampionsByVersion(GetLatestVersion));
+            if(champions == null || !champions.Any())
             {
                 ChampionsRoot request = _client.GetRequestForItem<ChampionsRoot>(DataDragonValues.ChampionsGeneric.Replace("{patch}", GetLatestVersion));
+                champions = GetChampionsFromData(request.Data);  //Save list of champions
 
-                if (request != null)
-                {
-                    champions = GetChampionsFromData(request.Data);  //Save list of champions
-                    _cache.Set("championVersion", GetLatestVersion);
-                    _cache.Set("champions", champions);
-                }
+                if(!_championRepo.SaveNewChampions(_mapper.Map<List<DAC.Entities.Champion>>(champions))) Console.WriteLine("Saving champions failed");
             }
 
             return champions;
@@ -140,7 +139,7 @@ namespace DongolOfLegends.API.ApiHelpers
         private IEnumerable<Champion> GetChampionsFromData(ChampionData data)
         {
             List<Champion> returnList = new List<Champion>();
-            foreach (var champ in data.GetType().GetProperties())
+            foreach (var champ in data.GetType().GetProperties().Where(d => d.Name != "Id"))
             {
                 returnList.Add(data.GetType().GetProperty(champ.Name).GetValue(data, null) as Champion);
             }

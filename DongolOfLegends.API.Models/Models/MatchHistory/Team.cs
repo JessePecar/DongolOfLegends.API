@@ -1,12 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DongolOfLegends.API.Models.Models.MatchHistory
 {
     public class Team
     {
+        [Key]
+        public long Id { get; set; }
         [JsonProperty("teamId")]
         public int TeamId { get; set; }
 
@@ -53,6 +56,6 @@ namespace DongolOfLegends.API.Models.Models.MatchHistory
         public int DominionVictoryScore { get; set; }
 
         [JsonProperty("bans")]
-        public List<object> Bans { get; set; }
+        public List<TeamBans> Bans { get; set; }
     }
 }

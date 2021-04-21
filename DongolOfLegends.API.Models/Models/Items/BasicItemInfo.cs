@@ -1,12 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DongolOfLegends.API.Models.Models.Items
 {
     public class BasicItemInfo
     {
+        [Key]
+        public string Code { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
 
@@ -40,11 +43,11 @@ namespace DongolOfLegends.API.Models.Models.Items
         [JsonProperty("consumeOnFull")]
         public bool ConsumeOnFull { get; set; }
 
-        [JsonProperty("from")]
-        public List<object> From { get; set; }
+        //[JsonProperty("from")]
+        //public List<object> From { get; set; }
 
-        [JsonProperty("into")]
-        public List<object> Into { get; set; }
+        //[JsonProperty("into")]
+        //public List<object> Into { get; set; }
 
         [JsonProperty("specialRecipe")]
         public int SpecialRecipe { get; set; }
@@ -64,8 +67,8 @@ namespace DongolOfLegends.API.Models.Models.Items
         [JsonProperty("stats")]
         public ItemStats Stats { get; set; }
 
-        [JsonProperty("tags")]
-        public List<object> Tags { get; set; }
+        //[JsonProperty("tags")]
+        //public List<object> Tags { get; set; }
 
         [JsonProperty("maps")]
         public ItemsEnabledMaps Maps { get; set; }

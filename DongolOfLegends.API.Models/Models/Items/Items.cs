@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DongolOfLegends.API.Models.Models.Items
@@ -10,6 +11,7 @@ namespace DongolOfLegends.API.Models.Models.Items
         [JsonProperty("type")]
         public string Type { get; set; }
 
+        [Key]
         [JsonProperty("version")]
         public string Version { get; set; }
 

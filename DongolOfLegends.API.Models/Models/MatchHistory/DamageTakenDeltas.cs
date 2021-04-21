@@ -1,12 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DongolOfLegends.API.Models.Models.MatchHistory
 {
     public class DamageTakenDeltas
     {
+        [Key]
+        public long Id { get; set; }
         [JsonProperty("10-20")]
         public double _1020 { get; set; }
 

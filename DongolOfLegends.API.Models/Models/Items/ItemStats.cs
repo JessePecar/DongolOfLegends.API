@@ -1,12 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DongolOfLegends.API.Models.Models.Items
 {
     public class ItemStats
     {
+        [Key]
+        public long Id { get; set; }
         [JsonProperty("FlatHPPoolMod")]
         public int FlatHPPoolMod { get; set; }
 

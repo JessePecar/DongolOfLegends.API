@@ -1,11 +1,17 @@
 using AutoMapper;
 using DongolOfLegends.API.ApiHelpers;
 using DongolOfLegends.API.ApiHelpers.Contracts;
+using DongolOfLegends.API.BusinessLayer.Profiles;
+using DongolOfLegends.API.DAC.Clients;
+using DongolOfLegends.API.DAC.Context;
+using DongolOfLegends.API.DAC.Interfaces;
+using DongolOfLegends.API.Models.Context;
 using DongolOfLegends.API.Models.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,14 +40,16 @@ namespace DongolOfLegends.API
             services.AddControllers();
             services.AddHttpClient(); 
             services.AddMemoryCache();
-            services.AddSingleton<IClient, DOLClient>();
-            services.AddSingleton<ILeagueData, LeagueData>();
+            services.AddScoped<IClient, DOLClient>();
+            services.AddScoped<ILeagueData, LeagueData>();
+            services.AddDbContextFactory<DongolXContext>(options => options.UseSqlServer(Configuration["Global:ConnectionStrings:DONGOLX"]));
 
-            services.AddSingleton(s =>
+            services.AddScoped<IChampionRepository, ChampionRepository>();
+            services.AddScoped(s =>
             {
                 return new MapperConfiguration(cfg =>
                 {
-                    cfg.AddProfile<ChampionProfile>();
+                    cfg.AddProfile<ChampionProfiles>();
                 }).CreateMapper();
             });
         }
