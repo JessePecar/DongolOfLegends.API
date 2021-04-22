@@ -48,10 +48,11 @@ namespace DongolOfLegends.API.ApiHelpers
             IEnumerable<Champion> champions = _mapper.Map<IEnumerable<Champion>>(_championRepo.GetChampionsByVersion(GetLatestVersion));
             if(champions == null || !champions.Any())
             {
+                //Save list of champions
                 ChampionsRoot request = _client.GetRequestForItem<ChampionsRoot>(DataDragonValues.ChampionsGeneric.Replace("{patch}", GetLatestVersion));
-                champions = GetChampionsFromData(request.Data);  //Save list of champions
+                champions = request.Data.Select(d => d.Value);
 
-                if(!_championRepo.SaveNewChampions(_mapper.Map<List<DAC.Entities.Champion>>(champions))) Console.WriteLine("Saving champions failed");
+                if (!_championRepo.SaveNewChampions(_mapper.Map<List<DAC.Entities.Champion>>(champions))) Console.WriteLine("Saving champions failed");
             }
 
             return champions;

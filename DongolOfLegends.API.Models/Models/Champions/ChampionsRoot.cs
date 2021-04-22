@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,7 +20,7 @@ namespace DongolOfLegends.API.Models.Models.Champions
 
         [NotMapped]
         [JsonProperty("data")]
-        public ChampionData Data { get; set; }
+        public Dictionary<string, Champion> Data { get; set; }
     }
 
 

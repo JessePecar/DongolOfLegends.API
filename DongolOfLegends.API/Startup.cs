@@ -17,6 +17,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PecTec.Riot.Core;
+using PecTec.Riot.Core.Interfaces;
+using PecTec.Riot.LoL;
+using PecTec.Riot.LoL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +47,14 @@ namespace DongolOfLegends.API
             services.AddScoped<IClient, DOLClient>();
             services.AddScoped<ILeagueData, LeagueData>();
             services.AddDbContextFactory<DongolXContext>(options => options.UseSqlServer(Configuration["Global:ConnectionStrings:DONGOLX"]));
-
+            services.AddTransient<PecTecClientOptions>(options => new PecTecClientOptions
+            {
+                RiotTokenString = Configuration["Riot:Api:DeveloperKey"],
+                RiotTokenStringHeader = Configuration["Riot:Api:TokenHeader"]
+            });
+            services.AddSingleton<IPecTecClient, PecTecClient>();
+            services.AddSingleton<IStaticDataRetrieve, StaticDataRetrieve>();
+            services.AddSingleton<ILiveDataRetrieve, LiveDataRetrieve>();
             services.AddScoped<IChampionRepository, ChampionRepository>();
             services.AddScoped(s =>
             {

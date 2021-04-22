@@ -1,12 +1,13 @@
 ﻿using DongolOfLegends.API.ApiHelpers.Contracts;
 using DongolOfLegends.API.Models.Models;
 using DongolOfLegends.API.Models.Models.MatchHistory;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PecTec.Riot.Core.Interfaces;
+using PecTec.Riot.LoL.Interfaces;
+using PecTec.Riot.LoL.Models.Champions.Specifics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DongolOfLegends.API.Controllers
 {
@@ -14,7 +15,7 @@ namespace DongolOfLegends.API.Controllers
     [ApiController]
     public class SearchController : BaseController
     {
-        public SearchController(ILeagueData leagueData) : base(leagueData)
+        public SearchController(ILeagueData leagueData, IPecTecClient client, IStaticDataRetrieve data, ILiveDataRetrieve liveData) : base(leagueData, client, data, liveData)
         {
 
         }
@@ -34,7 +35,11 @@ namespace DongolOfLegends.API.Controllers
         [Route("ChampionSearch/{championName}")]
         public IActionResult ChampionSearch(string championName)
         {
-            try { return Ok(LeagueData.GetChampion(championName)); }
+            try 
+            {
+                ChampionSpecificDataModel champ = Data.RetrieveChampionByName(championName);
+                return Ok(champ);
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
