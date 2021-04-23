@@ -15,6 +15,7 @@ using PecTec.Riot.Core;
 using PecTec.Riot.Core.Interfaces;
 using PecTec.Riot.LoL;
 using PecTec.Riot.LoL.Interfaces;
+using System.Text.Json.Serialization;
 
 namespace DongolOfLegends.API
 {
@@ -31,7 +32,12 @@ namespace DongolOfLegends.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.MaxDepth = 64;
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
+            
             services.AddHttpClient(); 
             services.AddMemoryCache();
             services.AddScoped<IClient, DOLClient>();
@@ -51,9 +57,11 @@ namespace DongolOfLegends.API
             {
                 return new MapperConfiguration(cfg =>
                 {
-                    cfg.AddProfile<ChampionProfiles>();
+                    cfg.AddProfile(new ChampionProfiles(Configuration));
                 }).CreateMapper();
             });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,10 +7,14 @@ namespace DongolOfLegends.API.DAC.Entities
 {
     public partial class ChampionTag
     {
-        public long Id { get; set; }
-        public string Tag { get; set; }
-        public string ChampionId { get; set; }
+        public ChampionTag()
+        {
+            ChampionTagsLinks = new HashSet<ChampionTagsLink>();
+        }
 
-        public virtual Champion Champion { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+
+        public virtual ICollection<ChampionTagsLink> ChampionTagsLinks { get; set; }
     }
 }

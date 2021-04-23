@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="PecTec.Riot.Core" Version="1.0.0" />
-    <PackageReference Include="PecTec.Riot.LoL" Version="1.0.9" />
+    <PackageReference Include="PecTec.Riot.LoL" Version="1.0.10" />
   </ItemGroup>
 
   <ItemGroup>

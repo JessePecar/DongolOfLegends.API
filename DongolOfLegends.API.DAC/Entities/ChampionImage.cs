@@ -9,18 +9,23 @@ namespace DongolOfLegends.API.DAC.Entities
     {
         public ChampionImage()
         {
+            ChampionPassives = new HashSet<ChampionPassive>();
+            ChampionSpells = new HashSet<ChampionSpell>();
             Champions = new HashSet<Champion>();
         }
 
         public long Id { get; set; }
-        public string Full { get; set; }
+        public string FullImageName { get; set; }
         public string Sprite { get; set; }
         public string Group { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int W { get; set; }
-        public int H { get; set; }
+        public int XValue { get; set; }
+        public int YValue { get; set; }
+        public int WValue { get; set; }
+        public int HValue { get; set; }
+        public string ImageHref { get; set; }
 
+        public virtual ICollection<ChampionPassive> ChampionPassives { get; set; }
+        public virtual ICollection<ChampionSpell> ChampionSpells { get; set; }
         public virtual ICollection<Champion> Champions { get; set; }
     }
 }

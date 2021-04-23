@@ -9,23 +9,29 @@ namespace DongolOfLegends.API.DAC.Entities
     {
         public Champion()
         {
-            ChampionTags = new HashSet<ChampionTag>();
+            ChampionSkins = new HashSet<ChampionSkin>();
+            ChampionSpells = new HashSet<ChampionSpell>();
+            ChampionTagsLinks = new HashSet<ChampionTagsLink>();
         }
 
-        public string Id { get; set; }
-        public string Version { get; set; }
-        public long Key { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
+        public string Version { get; set; }
+        public string RiotId { get; set; }
         public string Title { get; set; }
         public string Blurb { get; set; }
-        public long? InfoId { get; set; }
-        public long? ImageId { get; set; }
         public string Partype { get; set; }
-        public long? StatsId { get; set; }
+        public long InfoId { get; set; }
+        public long ImageId { get; set; }
+        public long StatsId { get; set; }
+        public string Lore { get; set; }
 
         public virtual ChampionImage Image { get; set; }
         public virtual ChampionInfo Info { get; set; }
-        public virtual ChampionsStat Stats { get; set; }
-        public virtual ICollection<ChampionTag> ChampionTags { get; set; }
+        public virtual ChampionStat Stats { get; set; }
+        public virtual ChampionPassive ChampionPassive { get; set; }
+        public virtual ICollection<ChampionSkin> ChampionSkins { get; set; }
+        public virtual ICollection<ChampionSpell> ChampionSpells { get; set; }
+        public virtual ICollection<ChampionTagsLink> ChampionTagsLinks { get; set; }
     }
 }

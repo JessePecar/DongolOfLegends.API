@@ -1,7 +1,10 @@
-﻿using DongolOfLegends.API.ApiHelpers.Contracts;
+﻿using AutoMapper;
+using DongolOfLegends.API.ApiHelpers.Contracts;
+using DongolOfLegends.API.DAC.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using PecTec.Riot.Core.Interfaces;
 using PecTec.Riot.LoL.Interfaces;
+using PecTec.Riot.LoL.Models.Champions;
 using PecTec.Riot.LoL.Models.Champions.Specifics;
 using System;
 using System.Collections.Generic;
@@ -13,7 +16,7 @@ namespace DongolOfLegends.API.Controllers
     [ApiController]
     public class SearchController : BaseController
     {
-        public SearchController(ILeagueData leagueData, IPecTecClient client, IStaticDataRetrieve data) : base(leagueData, client, data)
+        public SearchController(IMapper mapper, ILeagueData leagueData, IPecTecClient client, IStaticDataRetrieve data, IChampionRepository champRepo) : base(mapper, leagueData, client, data, champRepo)
         {
 
         }
@@ -53,7 +56,11 @@ namespace DongolOfLegends.API.Controllers
         {
             try
             {
-                return Ok(Data.RetrieveChampions());
+                Champions champs = Data.RetrieveChampions();
+                ChampRepo.UpsertChampions(Mapper.Map<List<DAC.Entities.Champion>>(champs.Data.Select(d => d.Value)));
+
+
+                return Ok(ChampRepo.GetChampionsByVersion(Data.RetrieveVersions().LatestVersion));
             }
             catch (Exception ex)
             {
