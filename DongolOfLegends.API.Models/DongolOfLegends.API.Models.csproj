@@ -18,7 +18,11 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="PecTec.Riot.Core" Version="1.0.0" />
-    <PackageReference Include="PecTec.Riot.LoL" Version="1.0.8" />
+    <PackageReference Include="PecTec.Riot.LoL" Version="1.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Context\" />
   </ItemGroup>
 
 </Project>

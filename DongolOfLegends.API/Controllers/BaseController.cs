@@ -11,14 +11,12 @@ namespace DongolOfLegends.API.Controllers
         protected readonly ILeagueData LeagueData;
         protected readonly IPecTecClient Client;
         protected readonly IStaticDataRetrieve Data;
-        protected readonly ILiveDataRetrieve LiveData;
 
-        public BaseController(ILeagueData leagueData, IPecTecClient client, IStaticDataRetrieve data, ILiveDataRetrieve liveData)
+        public BaseController(ILeagueData leagueData, IPecTecClient client, IStaticDataRetrieve data)
         {
             LeagueData = leagueData ?? throw new ArgumentNullException(nameof(leagueData));
             Client = client ?? throw new ArgumentNullException(nameof(client));
             Data = data ?? throw new ArgumentNullException(nameof(data));
-            LiveData = liveData ?? throw new ArgumentNullException(nameof(liveData));
         }
     }
 }

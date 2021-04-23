@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
     <PackageReference Include="PecTec.Riot.Core" Version="1.0.0" />
-    <PackageReference Include="PecTec.Riot.LoL" Version="1.0.8" />
+    <PackageReference Include="PecTec.Riot.LoL" Version="1.0.9" />
   </ItemGroup>
 
   <ItemGroup>
